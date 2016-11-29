@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Net;
+using System.Collections.Generic;
+using UnityEngine.Networking;
 
 public class GameManager : MonoBehaviour {
 
@@ -88,4 +91,6 @@ public class GameManager : MonoBehaviour {
         scoreText.text = "Score\n" + score;
         timerText.text = "Timer\n" + Mathf.RoundToInt (timer);
     }
+
+
 }
