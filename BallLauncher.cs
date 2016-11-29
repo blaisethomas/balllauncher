@@ -4,6 +4,7 @@ using System.Collections;
 
 public class BallLauncher : MonoBehaviour
 {
+
     public GameObject BBall;
     public float oTT, uTT, sTT;
 
@@ -78,11 +79,11 @@ public class BallLauncher : MonoBehaviour
         spinStartY = GvrController.TouchPos.y;
 
         sourceToTargetVector = (target.transform.position - hands.transform.position);
-        throwDirection = GvrController.Orientation; // * new Quaternion(0.15f,0,0,0);
+        throwDirection = new Quaternion(GvrController.Orientation.x + 0.18f, GvrController.Orientation.y, GvrController.Orientation.z, GvrController.Orientation.w); 
+        //throwDirection.x = 0;
+        //throwDirection.x += 0.3f;  // controller x axis rotation correct
 
-        throwDirection.x += 0.2f;  // controller x axis rotation correct
-
-        throwForce = Math.Abs(Math.Max(GvrController.Gyro.x, GvrController.Gyro.y)) * 0.55f; // gyro force
+        throwForce = (Math.Max(Math.Abs(GvrController.Gyro.x), Math.Abs(GvrController.Gyro.y))) * 0.55f; // gyro force
         velocity = throwDirection * new Vector3(0, 0, throwForce);
 
         distanceToHoopZ = Math.Abs(camera.transform.position.z - target.transform.position.z);
