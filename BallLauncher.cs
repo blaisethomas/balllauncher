@@ -5,7 +5,7 @@ using System.Collections;
 public class BallLauncher : MonoBehaviour
 {
     public GameObject BBall;
-    public float oTT, uTT;
+    public float oTT, uTT, sTT;
 
     private float spinStartX, spinStopX, deltaSpinX, spinStartY, spinStopY, deltaSpinY, throwForce;
     private double distanceToHoopZ, distanceToHoopX, distanceToHoop;
@@ -40,6 +40,7 @@ public class BallLauncher : MonoBehaviour
             rb.transform.position = transform.position;
             ballInstance.transform.parent = hands.transform;
             rb.isKinematic = true;
+
         }
     }
 
@@ -52,8 +53,8 @@ public class BallLauncher : MonoBehaviour
         float velocityFactor = 5.5f + (float)distanceToHoop / 20;
         sourceToTargetVector = sourceToTargetVector + new Vector3(0, velocityFactor, 0);
 
-        //TODO refactor this statement: 
-        if (velocity.x < sourceToTargetVector.x + 1.5f && velocity.x > sourceToTargetVector.x - 1.5f && (velocity.y + velocity.z) < (sourceToTargetVector.y + sourceToTargetVector.z + oTT) && velocity.y + velocity.z > (sourceToTargetVector.y + sourceToTargetVector.z - uTT))
+        //TODO refactor :
+        if (velocity.x < sourceToTargetVector.x + sTT && velocity.x > sourceToTargetVector.x - sTT && (velocity.y + velocity.z) < (sourceToTargetVector.y + sourceToTargetVector.z + oTT) && velocity.y + velocity.z > (sourceToTargetVector.y + sourceToTargetVector.z - uTT))
         { // guided throw
             rb.isKinematic = false;
             ballInstance.transform.parent = null;
@@ -77,13 +78,15 @@ public class BallLauncher : MonoBehaviour
         spinStartY = GvrController.TouchPos.y;
 
         sourceToTargetVector = (target.transform.position - hands.transform.position);
-        throwDirection = GvrController.Orientation;
-        throwDirection.x += 0.35f; // controller x axis rotation correct
+        throwDirection = GvrController.Orientation; // * new Quaternion(0.15f,0,0,0);
+
+        throwDirection.x += 0.2f;  // controller x axis rotation correct
+
         throwForce = Math.Abs(Math.Max(GvrController.Gyro.x, GvrController.Gyro.y)) * 0.55f; // gyro force
         velocity = throwDirection * new Vector3(0, 0, throwForce);
 
-        distanceToHoopZ = Math.Abs(camera.transform.position.z - (GameObject.Find("Basket_Detector_1").transform.position.z));
-        distanceToHoopX = Math.Abs(camera.transform.position.x - (GameObject.Find("Basket_Detector_1").transform.position.x));
+        distanceToHoopZ = Math.Abs(camera.transform.position.z - target.transform.position.z);
+        distanceToHoopX = Math.Abs(camera.transform.position.x - target.transform.position.x);
         distanceToHoop = Math.Sqrt(Math.Pow(distanceToHoopX, 2) + Math.Pow(distanceToHoopZ, 2));
     }
 
