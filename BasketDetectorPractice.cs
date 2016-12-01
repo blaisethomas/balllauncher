@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BasketDetector : MonoBehaviour
+public class BasketDetectorPractice : MonoBehaviour
 {
 
     public GameObject Player;
 
     public GameObject[] Zones;
-    public ScoreManager scoreManager; 
+    public ScoreManagerPractice scoreManager; 
     Camera camera;
-    int zoneIndex = 0;
+    
     string varabar = "hello dubdubdubd"; 
 
     //public Transform Teleport;
@@ -22,10 +22,10 @@ public class BasketDetector : MonoBehaviour
         if (other.attachedRigidbody.velocity.y < 0f)
         {
             //GameManager.score++;
-            GameManager.score++;
+            GameManagerPractice.score++;
 
-            zoneIndex ++;
-            //Player.transform.position = Zones[zoneIndex].transform.position;
+            int zoneIndex = Random.Range(0, Zones.Length);
+            Player.transform.position = Zones[zoneIndex].transform.position;
             //Player.transform.rotation = Zones[zoneIndex].transform.rotation;
 
             //camera = GetComponentInParent<Camera>();
@@ -35,9 +35,9 @@ public class BasketDetector : MonoBehaviour
 
             Debug.Log("detector");
 
-            scoreManager = new ScoreManager();
+            //scoreManager = new ScoreManagerPractice();
             //scoreManager.Start(varabar);
-            scoreManager.MakeCall("Hoop da da da");
+            //scoreManager.MakeCall("Hoop da da da");
             
             
 

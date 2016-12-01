@@ -4,14 +4,15 @@ using UnityEngine.UI;
 using System.Net;
 using System.Collections.Generic;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour {
+public class GameManagerPractice : MonoBehaviour {
 
     private bool gameStarted = false;
     private float timer;
 
     [SerializeField]
-    private float gameLengthInSeconds = 30f;
+    private float gameLengthInSeconds = 60f;
 
     public static int score;
     public static int ballThrown;
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        gameStateText.text = "Practice";
+        gameStateText.text = "Practice Round";
         timer = gameLengthInSeconds;
 
         UpdateScoreBoard ();
@@ -74,7 +75,7 @@ public class GameManager : MonoBehaviour {
     {
         score = 0;
         gameStarted = true;
-        gameStateText.text = "Shoot The Ball";
+        gameStateText.text = "Practice";
         gameStateSounds.PlayOneShot(gameStartSound);
     }
 
@@ -82,8 +83,9 @@ public class GameManager : MonoBehaviour {
     {
         gameStarted = false;
         timer = gameLengthInSeconds;
-        gameStateText.text = "Hit App Button\nTo Play Again";
+        gameStateText.text = "Main Event...";
         gameStateSounds.PlayOneShot(gameEndSound);
+        SceneManager.LoadSceneAsync("Test");
     }
 
     private void UpdateScoreBoard()

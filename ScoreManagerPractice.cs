@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.Networking;
 
-public class ScoreManager : MonoBehaviour {
+public class ScoreManagerPractice : MonoBehaviour {
 
 
 	
