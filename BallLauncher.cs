@@ -69,7 +69,7 @@ public class BallLauncher : MonoBehaviour
         }
 
         //rb.AddForce((target.transform.position - transform.position) * 2f);
-        GameManagerPractice.ballThrown++;
+        GameManagerMain.totalShotsTaken++;
     }
 
     private void takeMeasurements()

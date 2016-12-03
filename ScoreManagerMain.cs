@@ -6,19 +6,17 @@ public class ScoreManagerMain : MonoBehaviour {
 
 
 	
-	public void MakeCall (string variable) {
+	public void MakeCall (string score, string totalShotsTaken) {
 
         Debug.Log("in score manager");
 
         string url = "http://localhost:3000/posts";
 
         WWWForm form = new WWWForm();
-        form.AddField("var1", variable);
-        //form.AddField("var2", "value2");
+        form.AddField("score", score);
+        form.AddField("totalShotsTaken", totalShotsTaken);
         WWW www = new WWW(url, form);
-
         //StartCoroutine(WaitForResponse(www));
-
         WaitForResponse(www);
     }
 

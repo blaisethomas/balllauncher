@@ -35,10 +35,10 @@ public class BasketDetectorMain : MonoBehaviour
 
             Debug.Log("detector");
 
-            scoreManager = new ScoreManagerMain();
+            /*scoreManager = new ScoreManagerMain();
             //scoreManager.Start(varabar);
             scoreManager.MakeCall("Hoop da da da");
-            
+            */
             
 
         }

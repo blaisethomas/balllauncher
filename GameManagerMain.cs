@@ -14,6 +14,7 @@ public class GameManagerMain: MonoBehaviour {
     private float gameLengthInSeconds = 45f;
 
     public static int score;
+    public static int totalShotsTaken;
     public static int ballThrown;
 
     [SerializeField]
@@ -84,6 +85,7 @@ public class GameManagerMain: MonoBehaviour {
         timer = gameLengthInSeconds;
         gameStateText.text = "Hit App Button\nTo Play Again";
         gameStateSounds.PlayOneShot(gameEndSound);
+        writeScore();
     }
 
     private void UpdateScoreBoard()
@@ -96,7 +98,8 @@ public class GameManagerMain: MonoBehaviour {
     {
         ScoreManagerMain scoreManager = new ScoreManagerMain();
         string scoreString = score.ToString("F1");
-        scoreManager.MakeCall(scoreString);
+        string totalShotsTakenString = totalShotsTaken.ToString("F1");
+        scoreManager.MakeCall(scoreString, totalShotsTakenString);
     }
 
 

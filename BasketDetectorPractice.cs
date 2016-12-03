@@ -38,8 +38,6 @@ public class BasketDetectorPractice : MonoBehaviour
             //scoreManager = new ScoreManagerPractice();
             //scoreManager.Start(varabar);
             //scoreManager.MakeCall("Hoop da da da");
-            
-            
 
         }
     }
