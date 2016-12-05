@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 public class GameManagerMain: MonoBehaviour {
 
-    private bool gameStarted = false;
+    public bool gameStarted = false;
     private float timer;
 
     [SerializeField]

@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 
-public class BallLauncher : MonoBehaviour
+public class BallLauncherMain : MonoBehaviour
 {
 
     public GameObject BBall;
@@ -14,8 +14,6 @@ public class BallLauncher : MonoBehaviour
     private Rigidbody rb;
     private Vector3 velocity, sourceToTargetVector; 
     private Quaternion throwDirection;
-
-    public bool gameActive;
     
 
     
@@ -27,7 +25,7 @@ public class BallLauncher : MonoBehaviour
         target = GameObject.Find("Basket_Detector_1");
         camera = GameObject.FindGameObjectWithTag("MainCamera");
         //ballInstance.transform.parent = hands.transform;
-        //ballInstance.transform.position = transform.position;
+        //transform.position = transform.position;
         rb = ballInstance.GetComponentInChildren<Rigidbody>();
         rb.isKinematic = true;
         
@@ -43,11 +41,14 @@ public class BallLauncher : MonoBehaviour
             addTorqueToBall();
         }
 
-        if (GvrController.ClickButtonDown && gameActive)
-        {
+    
+
+        if (GvrController.ClickButtonDown)
+        {           
             rb.transform.position = transform.position;
             ballInstance.transform.parent = hands.transform;
             rb.isKinematic = true;
+
         }
 
     }

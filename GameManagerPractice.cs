@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManagerPractice : MonoBehaviour {
 
-    private bool gameStarted = false;
+    public bool gameStarted = false;
     private float timer;
 
     [SerializeField]
@@ -35,6 +35,10 @@ public class GameManagerPractice : MonoBehaviour {
     [SerializeField]
     private AudioClip gameEndSound;
 
+    public GameObject OnboardingCube;
+    public GameObject Hand;
+    private bool gameActive;
+
 
 
     // Use this for initialization
@@ -42,16 +46,18 @@ public class GameManagerPractice : MonoBehaviour {
 
         gameStateText.text = "Practice Round";
         timer = gameLengthInSeconds;
-
         UpdateScoreBoard ();
+       
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
+        gameActive = Hand.GetComponent<BallLauncher>().gameActive;
+
         // if game has not started and player pressed AppButton
-        if (!gameStarted && GvrController.TouchDown)
+        if (!gameStarted && GvrController.ClickButtonDown && gameActive)
         {
             StartGame();
         }
@@ -76,7 +82,7 @@ public class GameManagerPractice : MonoBehaviour {
         score = 0;
         gameStarted = true;
         gameStateText.text = "Practice";
-        gameStateSounds.PlayOneShot(gameStartSound);
+        //gameStateSounds.PlayOneShot(gameStartSound);
     }
 
     private void EndGame()
@@ -84,8 +90,11 @@ public class GameManagerPractice : MonoBehaviour {
         gameStarted = false;
         timer = gameLengthInSeconds;
         gameStateText.text = "Main Event...";
-        gameStateSounds.PlayOneShot(gameEndSound);
-        SceneManager.LoadSceneAsync("Test");
+        //gameStateSounds.PlayOneShot(gameEndSound);
+        //SceneManager.LoadScene("Test");
+        //int indexSC = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene("Main");
+        
     }
 
     private void UpdateScoreBoard()
@@ -93,6 +102,7 @@ public class GameManagerPractice : MonoBehaviour {
         scoreText.text = "Score\n" + score;
         timerText.text = "Timer\n" + Mathf.RoundToInt (timer);
     }
+
 
 
 }
