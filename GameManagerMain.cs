@@ -11,11 +11,10 @@ public class GameManagerMain: MonoBehaviour {
     private float timer;
 
     [SerializeField]
-    private float gameLengthInSeconds = 45f;
+    private float gameLengthInSeconds = 5f;
 
     public static int score;
     public static int totalShotsTaken;
-    public static int ballThrown;
 
     [SerializeField]
     private Text scoreText;
@@ -35,12 +34,15 @@ public class GameManagerMain: MonoBehaviour {
     [SerializeField]
     private AudioClip gameEndSound;
 
-
+    ScoreManagerMain sm;
 
     // Use this for initialization
     void Start () {
-
-        gameStateText.text = "Practice Round";
+        this.gameObject.AddComponent<ScoreManagerMain>();
+        sm = this.GetComponent<ScoreManagerMain>();
+        sm.LastAdded();
+        
+        gameStateText.text = "Practice";
         timer = gameLengthInSeconds;
 
         UpdateScoreBoard ();
@@ -71,12 +73,17 @@ public class GameManagerMain: MonoBehaviour {
 	
 	}
 
+
     private void StartGame()
     {
         score = 0;
         gameStarted = true;
-        gameStateText.text = "Practice";
-        gameStateSounds.PlayOneShot(gameStartSound);
+        
+        //gameStateSounds.PlayOneShot(gameStartSound);
+        //string playerName = sm.LastAdded();
+        //Debug.Log(playerName);
+        gameStateText.text = "TEst";
+
     }
 
     private void EndGame()
@@ -96,10 +103,9 @@ public class GameManagerMain: MonoBehaviour {
 
     private void writeScore()
     {
-        ScoreManagerMain scoreManager = new ScoreManagerMain();
-        string scoreString = score.ToString("F1");
-        string totalShotsTakenString = totalShotsTaken.ToString("F1");
-        scoreManager.MakeCall(scoreString, totalShotsTakenString);
+        string scoreString = score.ToString();
+        string totalShotsTakenString = totalShotsTaken.ToString();
+        sm.CreateHighScore(scoreString, totalShotsTakenString);
     }
 
 

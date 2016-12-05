@@ -8,7 +8,7 @@ public class BallLauncher : MonoBehaviour
     public GameObject BBall;
     public float oTT, uTT, sTT;
 
-    private float spinStartX, spinStopX, deltaSpinX, spinStartY, spinStopY, deltaSpinY, throwForce;
+    private float spinStartX, spinStopX, deltaSpinX, spinStartY, spinStopY, deltaSpinY, throwForce, mix;
     private double distanceToHoopZ, distanceToHoopX, distanceToHoop;
     private GameObject ballInstance, hands, target, camera;
     private Rigidbody rb;
@@ -29,15 +29,18 @@ public class BallLauncher : MonoBehaviour
 
     void Update()
     {
-        if (GvrController.TouchUp)
+        if (GvrController.ClickButtonUp)
         { 
             takeMeasurements();
             throwBall();
             addTorqueToBall();
         }
 
-        if (GvrController.TouchDown)
+        if (GvrController.ClickButtonDown)
         {
+            //ballInstance = Instantiate(BBall);
+            //rb = ballInstance.GetComponentInChildren<Rigidbody>();
+
             rb.transform.position = transform.position;
             ballInstance.transform.parent = hands.transform;
             rb.isKinematic = true;
@@ -51,7 +54,7 @@ public class BallLauncher : MonoBehaviour
         ballInstance.transform.parent = null;
 
         //Magic number offset for calculating the perfect throw from any distance under gravity
-        float velocityFactor = 5.5f + (float)distanceToHoop / 20;
+        float velocityFactor = 3.5f + (float)distanceToHoop *0.5f;
         sourceToTargetVector = sourceToTargetVector + new Vector3(0, velocityFactor, 0);
 
         //TODO refactor :
@@ -59,7 +62,7 @@ public class BallLauncher : MonoBehaviour
         { // guided throw
             rb.isKinematic = false;
             ballInstance.transform.parent = null;
-            rb.velocity = sourceToTargetVector;
+            rb.velocity = sourceToTargetVector + new Vector3(UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.1f, 0.1f), UnityEngine.Random.Range(-0.25f, 0.25f));
         }
         else
         { // normal throw
@@ -83,7 +86,7 @@ public class BallLauncher : MonoBehaviour
         //throwDirection.x = 0;
         //throwDirection.x += 0.3f;  // controller x axis rotation correct
 
-        throwForce = (Math.Max(Math.Abs(GvrController.Gyro.x), Math.Abs(GvrController.Gyro.y))) * 0.55f; // gyro force
+        throwForce = (Math.Max(Math.Abs(GvrController.Gyro.x), Math.Abs(GvrController.Gyro.y))) * 0.35f + GvrController.Accel.y *0.35f; // gyro force
         velocity = throwDirection * new Vector3(0, 0, throwForce);
 
         distanceToHoopZ = Math.Abs(camera.transform.position.z - target.transform.position.z);

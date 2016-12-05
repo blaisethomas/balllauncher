@@ -7,7 +7,6 @@ public class BasketDetectorPractice : MonoBehaviour
     public GameObject Player;
 
     public GameObject[] Zones;
-    public ScoreManagerPractice scoreManager; 
     Camera camera;
     
     string varabar = "hello dubdubdubd"; 
